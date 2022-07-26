@@ -21,7 +21,7 @@ func main() {
     log.Println("[Segfautilities] Starting")
     otherthings.CheckEnv()
     log.Println("[HTTP] Starting server")
-    pieceof := os.Getenv("SEGFAUTILITIES_PORT") // I hate this
+    pieceof := os.Getenv("SEGFAUTILITIES_PORT")
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         data := StaticThingy{

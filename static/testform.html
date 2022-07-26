@@ -1,0 +1,25 @@
+<html>
+
+    <head>
+      <title>hCaptcha Demo</title>
+      <script src="https://hcaptcha.com/1/api.js" async defer></script>
+    </head>
+    
+    <body>
+      <form action="/api/form" method="POST">
+        <input type="text" name="email" placeholder="Email" />
+        <select id="commentType" required="required">
+            <option value="" selected="selected" disabled="disabled">Select a type of comment</option>
+            <option value="Feedback">Feedback</option>
+            <option value="Suggestion">Suggestion</option>
+            <option value="Question">Question</option>
+            <option value="Bug">Bug</option>
+        </select>
+        <input type="password" name="password" placeholder="Password" />
+        <div class="h-captcha" data-sitekey="{{ .SiteKey }}"></div>
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+    </body>
+    
+    </html>
