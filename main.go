@@ -7,6 +7,7 @@ import (
         "log"
         "github.com/ProjectSegfault/segfautilities/otherthings"
         "os"
+        "github.com/ProjectSegfault/segfautilities/api"
 )
 
 type StaticThingy struct {
@@ -31,6 +32,7 @@ func main() {
 	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
         io.WriteString(w, "welcome to hell")
     })
+    api.Form()
     log.Println("[HTTP] HTTP server is now running at " + pieceof + "!")
     log.Println(http.ListenAndServe(":" + pieceof, nil))
 }
