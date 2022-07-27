@@ -17,6 +17,7 @@ import (
 var (
 	siteKey   = os.Getenv("HCAPTCHA_SITE_KEY")
 	secretKey = os.Getenv("HCAPTCHA_SECRET_KEY")
+	webhookURL = os.Getenv("SEGFAUTILITIES_WEBHOOK_URL")
 )
 
 var (
@@ -39,27 +40,26 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusUnauthorized)
 				fmt.Fprint(w, "Seems like captcha failed, you didn't complete the captcha or you are a bot. Please try again.\nPlease note that your IP has been logged in our systems for manual review to check if you're an abusive user. If you're seen as abusive, you will be blacklisted.")
 				postData := url.Values{
-					"content": {"IP " + r.RemoteAddr + "failed captcha!"},
+					"content": {"IP " + r.RemoteAddr + "failed captcha! [AbuseIPDB](https://abuseipdb.com/check/" + r.RemoteAddr},
 				}
-				req, err := http.PostForm("https://canary.discord.com/api/webhooks/1001546472971587674/XpxdpvlrEvEo7jnRmWyrEudTW0eNC_LpNVd-uC20R44e_efgwvhzSNQ26IaGeO9yan6f", postData)
+				req, err := http.PostForm(webhookURL, postData)
 				if err != nil {
-     			   log.Fatal(err)
+     			   log.Fatal("Something went terribly wrong!", err)
     			}
 
 				fmt.Fprint(io.Discard, req) // I don't want the result of the request in stdout
-				return
-			}
-			log.Printf(r.FormValue("aisdjaoidjoiajsidaoj"))
-			fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\n%#+v", hcaptchaResp)
-			postData := url.Values{
-				"content": {"IP " + r.RemoteAddr + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**"},
-			}
-			req, err := http.PostForm("https://discord.com/api/webhooks/1001546472971587674/XpxdpvlrEvEo7jnRmWyrEudTW0eNC_LpNVd-uC20R44e_efgwvhzSNQ26IaGeO9yan6f", postData)
-			if err != nil {
-				log.Fatal(err)
-			}
+			} else {
+				fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\n%#+v", hcaptchaResp)
+				postData := url.Values{
+					"content": {"IP " + r.RemoteAddr + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**"},
+				}
+				req, err := http.PostForm(webhookURL, postData)
+				if err != nil {
+					log.Fatal("Something went terribly wrong!", err)
+				}
 
-			fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
+				fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
+			}
 		default:
 			http.Error(w, "Method isn't allowed!\nYou may only POST here, not " + r.Method, http.StatusMethodNotAllowed)
 		}

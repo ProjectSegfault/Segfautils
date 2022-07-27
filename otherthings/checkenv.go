@@ -30,5 +30,11 @@ func CheckEnv() {
 	} else {
 		log.Println("[Segfautilities] Environment variable HCAPTCHA_SECRET_KEY is set!")
 	}
+	unused, ok1 = os.LookupEnv("SEGFAUTILITIES_WEBHOOK_URL")
+	if !ok1 {
+		log.Fatal("[Segfautilities] Environment variable SEGFAUTILITIES_WEBHOOK_URL is not set! Please set it to your webhook URL. If that URL doesn't work, make an issue on GitHub!")
+	} else {
+		log.Println("[Segfautilities] Environment variable SEGFAUTILITIES_WEBHOOK_URL is set!")
+	}
 	log.Println("[Segfautilities] ✅ Passed the Environment Variables check")
 }
