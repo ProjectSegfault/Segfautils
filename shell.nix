@@ -6,6 +6,7 @@ pkgs.mkShell {
         pkgs.go
     ];
     shellHook = ''
+        export SEGFAUTILITIES_PORT=6893
         echo "Go installed, have your fun"
     '';
 }
