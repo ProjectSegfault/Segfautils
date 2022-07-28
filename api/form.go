@@ -12,6 +12,8 @@ import (
 
 	"net/url"
 	"io"
+
+    "github.com/ProjectSegfault/segfautilities/otherthings"
 )
 
 var (
@@ -29,7 +31,6 @@ func Form() {
 	http.HandleFunc("/api/form", client.HandlerFunc(theActualFormCode))
 
 	http.HandleFunc("/form", renderTestForm)
-
 }
 
 func theActualFormCode(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +41,7 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusUnauthorized)
 				fmt.Fprint(w, "Seems like captcha failed, you didn't complete the captcha or you are a bot. Please try again.\nPlease note that your IP has been logged in our systems for manual review to check if you're an abusive user. If you're seen as abusive, you will be blacklisted.")
 				postData := url.Values{
-					"content": {"IP " + r.RemoteAddr + "failed captcha! [AbuseIPDB](https://abuseipdb.com/check/" + r.RemoteAddr},
+					"content": {"IP " + otherthings.GetUserIP(r) + "failed captcha! [AbuseIPDB](https://abuseipdb.com/check/" + otherthings.GetUserIP(r) + ")"},
 				}
 				req, err := http.PostForm(webhookURL, postData)
 				if err != nil {
@@ -51,7 +52,7 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 			} else {
 				fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\n%#+v", hcaptchaResp)
 				postData := url.Values{
-					"content": {"IP " + r.RemoteAddr + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**"},
+					"content": {"IP " + otherthings.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**"},
 				}
 				req, err := http.PostForm(webhookURL, postData)
 				if err != nil {
@@ -63,7 +64,7 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 		default:
 			http.Error(w, "Method isn't allowed!\nYou may only POST here, not " + r.Method, http.StatusMethodNotAllowed)
 		}
-		log.Println("[HTTP] " + r.RemoteAddr + " accessed /api/form with method " + r.Method)
+		log.Println("[HTTP] " + otherthings.GetUserIP(r) + " accessed /api/form with method " + r.Method)
 }
 
 func renderTestForm(w http.ResponseWriter, r *http.Request) {
