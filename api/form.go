@@ -2,7 +2,6 @@ package api
 
 import (
 	"net/http"
-	"html/template"
 	"log"
 
     "github.com/kataras/hcaptcha"
@@ -21,13 +20,10 @@ var (
 	secretKey = os.Getenv("HCAPTCHA_SECRET_KEY")
 	webhookURL = os.Getenv("SEGFAUTILITIES_WEBHOOK_URL")
 	client   = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
-	testForm = template.Must(template.ParseFiles("./static/testform.html"))
 )
 
 func Form() {
 	http.HandleFunc("/api/form", client.HandlerFunc(theActualFormCode))
-
-	http.HandleFunc("/form", renderTestForm)
 }
 
 func theActualFormCode(w http.ResponseWriter, r *http.Request) {
@@ -63,15 +59,3 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Println("[HTTP] " + otherthings.GetUserIP(r) + " accessed /api/form with method " + r.Method)
 }
-
-func renderTestForm(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	testForm.Execute(w, map[string]string{
-		"SiteKey": siteKey,
-	})
-}
-
-// testForm is only used in development. I will remove it when I've added it to the website
-// Oh also, you need to add the following to your hosts file:
-// 127.0.0.1 epicwebsite.com
-// and visit epicwebsite.com:(yourport)/form. hCaptcha doesn't work in localhost unfortunately :(
