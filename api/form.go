@@ -20,10 +20,7 @@ var (
 	siteKey   = os.Getenv("HCAPTCHA_SITE_KEY")
 	secretKey = os.Getenv("HCAPTCHA_SECRET_KEY")
 	webhookURL = os.Getenv("SEGFAUTILITIES_WEBHOOK_URL")
-)
-
-var (
-	client       = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
+	client   = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
 	testForm = template.Must(template.ParseFiles("./static/testform.html"))
 )
 
@@ -39,9 +36,9 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 			hcaptchaResp, ok := hcaptcha.Get(r)
 			if !ok {
 				w.WriteHeader(http.StatusUnauthorized)
-				fmt.Fprint(w, "Seems like captcha failed, you didn't complete the captcha or you are a bot. Please try again.\nPlease note that your IP has been logged in our systems for manual review to check if you're an abusive user. If you're seen as abusive, you will be blacklisted.")
+				fmt.Fprint(w, "Seems like captcha failed, you didn't complete the captcha or you are a bot. Please try again.\nPlease note that your IP has been logged in our systems for manual review to check if you're an abusive user. If you're seen as abusive, you will be blacklisted.\nYour message has not been sent.")
 				postData := url.Values{
-					"content": {"IP " + otherthings.GetUserIP(r) + "failed captcha! [AbuseIPDB](https://abuseipdb.com/check/" + otherthings.GetUserIP(r) + ")"},
+					"content": {"IP " + otherthings.GetUserIP(r) + "failed captcha!\nhttps://abuseipdb.com/check/" + otherthings.GetUserIP(r)},
 				}
 				req, err := http.PostForm(webhookURL, postData)
 				if err != nil {
@@ -50,9 +47,9 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 
 				fmt.Fprint(io.Discard, req) // I don't want the result of the request in stdout
 			} else {
-				fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\n%#+v", hcaptchaResp)
+				fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\nPlease ignore how different this page looks to the page you were on earlier. I'll figure it out eventually!\n%#+v", hcaptchaResp)
 				postData := url.Values{
-					"content": {"IP " + otherthings.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**"},
+					"content": {"IP " + otherthings.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + otherthings.GetUserIP(r)},
 				}
 				req, err := http.PostForm(webhookURL, postData)
 				if err != nil {
