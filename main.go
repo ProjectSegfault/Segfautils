@@ -14,18 +14,18 @@ type StaticThingy struct {
     Port string
 }
 
-var pieceof string
+var port string
 var shit bool
 
 func main() {
     log.Println("[Segfautilities] Starting")
     otherthings.CheckEnv()
     log.Println("[HTTP] Starting server")
-    pieceof := os.Getenv("SEGFAUTILITIES_PORT")
+    port := os.Getenv("SEGFAUTILITIES_PORT")
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         data := StaticThingy{
-            Port: pieceof,
+            Port: port,
         }
         tmpl.Execute(w, data)
     })
@@ -33,6 +33,6 @@ func main() {
         io.WriteString(w, "welcome to hell")
     })
     api.Form()
-    log.Println("[HTTP] HTTP server is now running at " + pieceof + "!")
-    log.Println(http.ListenAndServe(":" + pieceof, nil))
+    log.Println("[HTTP] HTTP server is now running at " + port + "!")
+    log.Println(http.ListenAndServe(":" + port, nil))
 }
