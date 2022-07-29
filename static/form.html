@@ -24,7 +24,7 @@
 </head>
 <body>
     <form
-        action="https://localhost:{{.Port}}/api/form"
+        action="/api/form"
         method="POST"
     >
         <div class="meta">
@@ -50,7 +50,7 @@
             required
             placeholder="Your message"
         ></textarea>
-        <div class="h-captcha" data-sitekey=""></div>
+        <div class="h-captcha" data-sitekey="{{.HCaptchaSiteKey}}"></div>
         <input type="submit" value="Submit" />
     </form>
 </body>

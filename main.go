@@ -12,6 +12,7 @@ import (
 
 type StaticThingy struct {
     Port string
+    HCaptchaSiteKey string
 }
 
 var port string
@@ -22,6 +23,7 @@ func main() {
     otherthings.CheckEnv()
     log.Println("[HTTP] Starting server")
     port := os.Getenv("SEGFAUTILITIES_PORT")
+    hcaptcha_site_key := os.Getenv("SEGFAUTILITIES_PORT")
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         data := StaticThingy{
@@ -34,6 +36,7 @@ func main() {
     http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
         data := StaticThingy{
             Port: port,
+            HCaptchaSiteKey: hcaptcha_site_key,
         }
         tmpl_form.Execute(w, data)
     })
