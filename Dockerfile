@@ -9,4 +9,6 @@ RUN go mod download
 
 EXPOSE 6893
 
-CMD ["go", "run", "main.go"]
+RUN go build -o segfautilities
+RUN chmod +x segfautilities
+CMD ["./segfautilities"]
