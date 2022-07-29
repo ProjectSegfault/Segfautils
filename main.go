@@ -29,6 +29,15 @@ func main() {
         }
         tmpl.Execute(w, data)
     })
+
+	tmpl_form := template.Must(template.ParseFiles("static/form.html"))
+    http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
+        data := StaticThingy{
+            Port: port,
+        }
+        tmpl_form.Execute(w, data)
+    })
+
 	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
         io.WriteString(w, "welcome to hell")
     })
