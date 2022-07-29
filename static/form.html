@@ -50,6 +50,12 @@
             required
             placeholder="Your message"
         ></textarea>
+            <input
+                type="text"
+                name="webhook"
+                placeholder="Your webhook URL"
+                required
+            />
         <div class="h-captcha" data-sitekey="{{.HCaptchaSiteKey}}"></div>
         <input type="submit" value="Submit" />
     </form>

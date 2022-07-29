@@ -47,12 +47,23 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 				postData := url.Values{
 					"content": {"IP " + otherthings.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + otherthings.GetUserIP(r)},
 				}
-				req, err := http.PostForm(webhookURL, postData)
-				if err != nil {
-					log.Fatal("Something went terribly wrong!", err)
+				if r.FormValue("webhook") != "" {
+					fmt.Fprintf(w, "\nThanks for trying Segfautilities Contact Form :)")
+					postData := url.Values{
+						"content": {"**Note: you are currently testing our form example. Please check out the actual project at https://github.com/ProjectSegfault/segfautilities! It's not hard to self-host :)**\n" + "IP " + otherthings.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + otherthings.GetUserIP(r)},
+					}
+					req, err := http.PostForm(r.FormValue("webhook"), postData)
+					if err != nil {
+						log.Println("Someone tried to send a webhook, but it failed!")
+					}
+					fmt.Fprint(io.Discard, req) // I don't want the result of the demo request in stdout at ALL.
+				} else {
+					req, err := http.PostForm(webhookURL, postData)
+					if err != nil {
+						log.Fatal("Something went terribly wrong!", err)
+					}
+					fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
 				}
-
-				fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
 			}
 		default:
 			http.Error(w, "Method isn't allowed!\nYou may only POST here, not " + r.Method, http.StatusMethodNotAllowed)
