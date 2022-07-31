@@ -11,4 +11,5 @@ EXPOSE 6893
 
 RUN go build -o segfautilities
 RUN chmod +x segfautilities
+RUN go clean -modcache
 CMD ["./segfautilities"]
