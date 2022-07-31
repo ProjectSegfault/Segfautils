@@ -6,10 +6,12 @@ For now it powers our contact form. In the future we will expand our APIs so you
 
 ## Setup
 
-### Docker: 
+### Docker:
 ```
-docker run -d --restart=always -p 6893:6893 --name segfautilities projectsegfault/segfautilities:latest -e HCAPTCHA_SITE_KEY='YOURSITEKEY' -e HCAPTCHA_SECRET_KEY='YOURSECRETKEY' -e SEGFAUTILITIES_WEBHOOK_URL='YOURWEBHOOKURL'
+docker run -d --restart=always -p 6893:6893 --name segfautilities projectsegfault/segfautilities:latest --env-file ./docker.env
 ```
+docker.env should be the environment file located in this repository, customized to your settings. The env file is self-documenting so I don't need to go in any detail here.
+
 
 We recommend using Docker as it provides better security (we suck in security, so that's why) and we are constantly updating Segfautilities. Docker makes it easy to update the program.
 
@@ -23,9 +25,9 @@ cd segfautilities/
 go run main.go # Run this when you've done above!
 ```
 #### NixOS
-``` 
+```
 git clone https://github.com/ProjectSegfault/segfautilities
-cd segfautilities/ 
+cd segfautilities/
 nix-shell # Avoid installing Go and setting up the web port, by just running a nix shell
 # You still need the environment variables HCAPTCHA_SITE_KEY, HCAPTCHA_SECRET_KEY and SEGFAUTILITIES_WEBHOOK_URL though!
 go run main.go # I wonder if this is good practice or not. If this isn't good practice, make a GitHub issue please.
