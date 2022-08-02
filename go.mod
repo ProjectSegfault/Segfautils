@@ -1,4 +1,4 @@
-module github.com/ProjectSegfault/segfautilities
+module github.com/ProjectSegfault/segfautils
 
 go 1.18
 

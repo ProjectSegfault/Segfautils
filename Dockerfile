@@ -1,15 +1,15 @@
 FROM golang:1.18-alpine3.16
 
-ENV SEGFAUTILITIES_PORT 6893
+ENV SEGFAUTILS_PORT 6893
 
-RUN mkdir /segfautilities 
-WORKDIR /segfautilities
-COPY . /segfautilities/
+RUN mkdir /segfautils
+WORKDIR /segfautils
+COPY . /segfautils/
 RUN go mod download
 
 EXPOSE 6893
 
-RUN go build -o segfautilities
-RUN chmod +x segfautilities
+RUN go build -o segfautils
+RUN chmod +x segfautils
 RUN go clean -modcache
-CMD ["./segfautilities"]
+CMD ["./segfautils"]

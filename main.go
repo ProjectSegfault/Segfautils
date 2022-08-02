@@ -1,49 +1,50 @@
 package main
 
 import (
-        "net/http"
-		"html/template"
-		"io"
-        "log"
-        "github.com/ProjectSegfault/segfautilities/otherthings"
-        "os"
-        "github.com/ProjectSegfault/segfautilities/api"
+	"html/template"
+	"io"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/ProjectSegfault/segfautils/api"
+	"github.com/ProjectSegfault/segfautils/otherthings"
 )
 
 type StaticThingy struct {
-    Port string
-    HCaptchaSiteKey string
+	Port            string
+	HCaptchaSiteKey string
 }
 
 var port string
 var shit bool
 
 func main() {
-    log.Println("[Segfautilities] Starting")
-    otherthings.CheckEnv()
-    log.Println("[HTTP] Starting server")
-    port := os.Getenv("SEGFAUTILITIES_PORT")
-    hcaptcha_site_key := os.Getenv("HCAPTCHA_SITE_KEY")
+	log.Println("[Segfautils] Starting")
+	otherthings.CheckEnv()
+	log.Println("[HTTP] Starting server")
+	port := os.Getenv("SEGFAUTILS_PORT")
+	hcaptcha_site_key := os.Getenv("HCAPTCHA_SITE_KEY")
 	tmpl := template.Must(template.ParseFiles("static/index.html"))
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        data := StaticThingy{
-            Port: port,
-        }
-        tmpl.Execute(w, data)
-    })
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := StaticThingy{
+			Port: port,
+		}
+		tmpl.Execute(w, data)
+	})
 
 	tmpl_form := template.Must(template.ParseFiles("static/form.html"))
-    http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
-        data := StaticThingy{
-            HCaptchaSiteKey: hcaptcha_site_key,
-        }
-        tmpl_form.Execute(w, data)
-    })
+	http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
+		data := StaticThingy{
+			HCaptchaSiteKey: hcaptcha_site_key,
+		}
+		tmpl_form.Execute(w, data)
+	})
 
 	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
-        io.WriteString(w, "welcome to hell")
-    })
-    api.Form()
-    log.Println("[HTTP] HTTP server is now running at " + port + "!")
-    log.Println(http.ListenAndServe(":" + port, nil))
+		io.WriteString(w, "welcome to hell")
+	})
+	api.Form()
+	log.Println("[HTTP] HTTP server is now running at " + port + "!")
+	log.Println(http.ListenAndServe(":"+port, nil))
 }
