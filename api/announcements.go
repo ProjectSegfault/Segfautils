@@ -77,7 +77,6 @@ func handleAnnouncementDeleteRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "You need to provide the authorization token given to you by your system administrator in order to delete an announcement.", http.StatusUnauthorized)
 		return
 	} else {
-		w.WriteHeader(http.StatusOK)
 		if _, err := os.Stat("./static/announcements.json"); errors.Is(err, os.ErrNotExist) {
 			http.Error(w, "If you're gonna delete the annoucement, there has to be an announcement in the first place.", http.StatusNotFound)
 			return
@@ -87,6 +86,7 @@ func handleAnnouncementDeleteRequest(w http.ResponseWriter, r *http.Request) {
 				log.Fatal(err)
 			}
 			w.Write([]byte("Announcement deleted!"))
+			w.WriteHeader(http.StatusOK)
 			return
 		}
 	}
