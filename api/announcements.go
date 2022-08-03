@@ -85,8 +85,8 @@ func handleAnnouncementDeleteRequest(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			w.Write([]byte("Announcement deleted!"))
 			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("Announcement deleted!"))
 			return
 		}
 	}
