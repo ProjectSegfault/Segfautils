@@ -3,12 +3,13 @@ package api
 import (
 	"errors"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
-	"github.com/gorilla/feeds"
+	"github.com/goccy/go-json"
 )
 
 var (
@@ -36,31 +37,20 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusOK)
 			now := time.Now()
-			feed := &feeds.Feed{
-				Title:       r.FormValue("title"),
-				Link:        &feeds.Link{Href: r.FormValue("link")},
-				Description: r.FormValue("severity"),
-				Created:     now,
+			data := map[string]interface{}{
+				"title":    r.FormValue("title"),
+				"link":     r.FormValue("link"),
+				"severity": r.FormValue("severity"),
+				"created":  now,
 			}
 
-			json, err := feed.ToJSON()
+			jsonData, err := json.Marshal(data)
 			if err != nil {
-				log.Fatal(err)
+				log.Printf("could not marshal json: %s\n", err)
+				return
 			}
 
-			f, err := os.Create("./static/announcements.json")
-
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			defer f.Close()
-
-			_, err2 := f.WriteString(json)
-
-			if err2 != nil {
-				log.Fatal(err2)
-			}
+			ioutil.WriteFile("./static/announcements.json", jsonData, os.ModePerm)
 
 			w.Write([]byte("Announcement posted!"))
 		}
