@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segfautils announcement command centre</title>
+    <style>
+        body {
+            background-color: #252525;
+            color: #fff;
+            font-family: 'JetBrains Mono', 'JetBrainsMono Nerd Font', monospace
+        }
+
+        a {
+            color: #00d4aa;
+        }
+
+        a:hover {
+            color: #4beacb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Post Announcement</h1>
+    <form
+        action="/api/announcements/post"
+        method="POST"
+        target="_blank"
+    >
+        <div class="meta">
+            <input
+                type="password"
+                name="token"
+                placeholder="Your authentication token"
+                required
+            />
+            <br />
+            <select id="severity" name="severity" required>
+                <option value="" selected disabled>Select severity of announcement</option>
+                <option value="info">Information announcement</option>
+                <option value="low">Low severity</option>
+                <option value="medium">Medium severity</option>
+                <option value="high">High severity</option>
+            </select>
+        </div>
+        <textarea
+            id="title"
+            name="title"
+            rows="4"
+            cols="25"
+            required
+            placeholder="The announcement text"></textarea>
+        <br />
+        <input
+                type="text"
+                name="link"
+                placeholder="Your link for more details"
+                required
+        />
+        <br />
+        <input type="submit" value="Submit" />
+    </form>
+    <h1>Delete Announcement</h1>
+    <form
+        action="/api/announcements/delete"
+        method="POST"
+        target="_blank"
+    >
+        <div class="meta">
+            <input
+                type="password"
+                name="token"
+                placeholder="Your authentication token"
+                required
+            />
+            <br />
+        </div>
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>

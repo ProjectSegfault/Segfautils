@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/ProjectSegfault/segfautils/api"
-	"github.com/ProjectSegfault/segfautils/otherthings"
+	"github.com/ProjectSegfault/segfautils/utils"
 )
 
 type StaticThingy struct {
@@ -21,7 +21,7 @@ var shit bool
 
 func main() {
 	log.Println("[Segfautils] Starting")
-	otherthings.CheckEnv()
+	utils.CheckEnv()
 	log.Println("[HTTP] Starting server")
 	port := os.Getenv("SEGFAUTILS_PORT")
 	hcaptcha_site_key := os.Getenv("HCAPTCHA_SITE_KEY")
@@ -44,7 +44,11 @@ func main() {
 	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "welcome to hell")
 	})
+	http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/announcements.html")
+	})
 	api.Form()
+	api.Announcements()
 	log.Println("[HTTP] HTTP server is now running at " + port + "!")
 	log.Println(http.ListenAndServe(":"+port, nil))
 }

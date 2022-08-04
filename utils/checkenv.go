@@ -1,5 +1,5 @@
 // Please ignore my terrible code :) It works
-package otherthings
+package utils
 
 import (
 	"log"
@@ -20,7 +20,7 @@ func CheckEnv() {
 	}
 	unused, ok1 = os.LookupEnv("HCAPTCHA_SITE_KEY")
 	if !ok1 || unused == "YOURSITEKEY" {
-		log.Fatal("[Segfautils] Environment variable HCAPTCHA_SITE_KEY is not set! Please set it to the site key you got from hCaptcha.")
+		log.Println("[Segfautils] Environment variable HCAPTCHA_SITE_KEY is not not set. It isn't required to be set, but without it, the example form will not work.")
 	} else {
 		log.Println("[Segfautils] Environment variable HCAPTCHA_SITE_KEY is set as " + unused)
 	}
@@ -35,6 +35,12 @@ func CheckEnv() {
 		log.Fatal("[Segfautils] Environment variable SEGFAUTILS_WEBHOOK_URL is not set! Please set it to your webhook URL. If that URL doesn't work, make an issue on GitHub!")
 	} else {
 		log.Println("[Segfautils] Environment variable SEGFAUTILS_WEBHOOK_URL is set!")
+	}
+	unused, ok1 = os.LookupEnv("SEGFAUTILS_AUTHTOKEN")
+	if !ok1 || unused == "YOURAUTHTOKEN" {
+		log.Fatal("[Segfautils] Environment variable SEGFAUTILS_AUTHTOKEN is not set! Please set it to a token you'd like to use for authorizing actions like announcements.")
+	} else {
+		log.Println("[Segfautils] Environment variable SEGFAUTILS_AUTHTOKEN is set!")
 	}
 	log.Println("[Segfautils] ✅ Passed the Environment Variables check")
 }
