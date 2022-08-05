@@ -8,7 +8,7 @@ For now it powers our contact form. In the future we will expand our APIs so you
 
 ### Docker:
 ```
-docker run -d --restart=always -p 6893:6893 --name segfautils projectsegfault/segfautils:latest --env-file ./docker.env
+docker run -d --restart=always -p 6893:6893 --name segfautils --env-file ./docker.env -v "$(pwd)"/data:/segfautils/data projectsegfault/segfautils:latest
 ```
 docker.env should be the environment file located in this repository, customized to your settings. The env file is self-documenting so I don't need to go in any detail here.
 
