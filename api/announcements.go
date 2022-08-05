@@ -36,7 +36,7 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			w.WriteHeader(http.StatusOK)
-			now := time.Now()
+			now := time.Now().Unix()
 			data := map[string]interface{}{
 				"title":    r.FormValue("title"),
 				"link":     r.FormValue("link"),
@@ -50,7 +50,7 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			ioutil.WriteFile("./static/announcements.json", jsonData, os.ModePerm)
+			ioutil.WriteFile("./data/announcements.json", jsonData, os.ModePerm)
 
 			w.Write([]byte("Announcement posted!"))
 		}
@@ -67,11 +67,11 @@ func handleAnnouncementDeleteRequest(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "You need to provide the authorization token given to you by your system administrator in order to delete an announcement.", http.StatusUnauthorized)
 		return
 	} else {
-		if _, err := os.Stat("./static/announcements.json"); errors.Is(err, os.ErrNotExist) {
+		if _, err := os.Stat("./data/announcements.json"); errors.Is(err, os.ErrNotExist) {
 			http.Error(w, "If you're gonna delete the annoucement, there has to be an announcement in the first place.", http.StatusNotFound)
 			return
 		} else {
-			err := os.Remove("./static/announcements.json")
+			err := os.Remove("./data/announcements.json")
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -87,11 +87,11 @@ func getAnnouncements(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	if _, err := os.Stat("./static/announcements.json"); errors.Is(err, os.ErrNotExist) {
+	if _, err := os.Stat("./data/announcements.json"); errors.Is(err, os.ErrNotExist) {
 		http.Error(w, "There are no announcements.", http.StatusNotFound)
 		return
 	} else {
-		f, err := os.Open("./static/announcements.json")
+		f, err := os.Open("./data/announcements.json")
 		if err != nil {
 			log.Fatal(err)
 		}
