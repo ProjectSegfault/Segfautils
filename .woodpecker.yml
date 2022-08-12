@@ -6,5 +6,5 @@ pipeline:
   dockerize:
     image: docker
     commands:
-      - docker build - < Dockerfile
+      - docker build -t projectsegfault/segfautils .
   
