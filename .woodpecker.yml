@@ -4,7 +4,15 @@ pipeline:
     commands:
       - go build -o segfautils
   dockerize:
-    image: docker:dind
-    commands:
-      - docker build -t projectsegfault/segfautils .
+    image: plugins/docker 
+      settings:
+        username:
+          from_secret: username
+        password:
+          from_secret: password
+        repo: projectsegfault/segfautils
+        tags: latest
+        dockerfile: Dockerfile
+
+    
   
