@@ -15,8 +15,7 @@ pipeline:
         from_secret: username
       password:
         from_secret: password
-      repo: projectsegfault/segfautils
-      tags: latest
+      repo: projectsegfault/segfautils 
       dockerfile: Dockerfile
 
     
