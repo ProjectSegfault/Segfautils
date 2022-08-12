@@ -4,7 +4,7 @@ pipeline:
     commands:
       - go build -o segfautils
   dockerize:
-    image: docker
+    image: docker:dind
     commands:
       - docker build -t projectsegfault/segfautils .
   
