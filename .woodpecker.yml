@@ -2,6 +2,9 @@ pipeline:
   build:
     image: golang:latest
     commands:
-      - go build
-      - go test
-      - echo "done"
+      - go build -o segfautils
+  dockerize:
+    image: docker
+    commands:
+      - docker build - < Dockerfile
+  
