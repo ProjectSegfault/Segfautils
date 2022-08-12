@@ -7,7 +7,7 @@ pipeline:
       - go build -o segfautils
   dockerize_n_publish:
     when:
-      event: [push, tag, deployment]
+      event: [push]
     name: dockerize and publish
     image: plugins/docker 
     settings:
