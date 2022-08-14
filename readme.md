@@ -25,12 +25,3 @@ go run main.go # Run this when you've done above, and you're planning on develop
 go build . -o segfautils
 ./segfautils
 ```
-#### NixOS
-```
-git clone https://github.com/ProjectSegfault/segfautils
-cd segfautils/
-nix-shell # Avoid installing Go and setting up the web port, by just running a nix shell
-# You still need the environment variables HCAPTCHA_SITE_KEY, HCAPTCHA_SECRET_KEY and SEGFAUTILS_WEBHOOK_URL though!
-go run main.go # If you're developing
-go build . -o segfautils && ./segfautils # If you're intending to use Segfautils for production.
-```
