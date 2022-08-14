@@ -9,11 +9,12 @@ import (
 	"os"
 	"time"
 
+	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/goccy/go-json"
 )
 
 var (
-	authToken = os.Getenv("SEGFAUTILS_AUTHTOKEN")
+	authToken = config.AuthToken()
 )
 
 func Announcements() {
