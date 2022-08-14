@@ -8,10 +8,9 @@ For now it powers our contact form. In the future we will expand our APIs so you
 
 ### Docker:
 ```
-docker run -d --restart=always -p 6893:6893 --name segfautils --env-file ./docker.env -v "$(pwd)"/data:/segfautils/data projectsegfault/segfautils:latest
+docker run -d --restart=always -p 6893:6893 --name segfautils -v "$(pwd)"/data:/segfautils/data projectsegfault/segfautils:latest
 ```
-docker.env should be the environment file located in this repository, customized to your settings. The env file is self-documenting so I don't need to go in any detail here.
-
+You need to copy the ``config.example.toml`` to ```config.toml`` and customize the values in the config file. YAML works as well, if you'd like to use that instead.
 
 We recommend using Docker as it provides better security (we suck in security, so that's why) and we are constantly updating Segfautils. Docker makes it easy to update the program.
 
