@@ -7,4 +7,4 @@ services:
       ports:
           - "6893:6893"
       volumes:
-        "./data:/segfautils/data"
+          - "./data:/segfautils/data"
