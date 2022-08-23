@@ -1,0 +1,10 @@
+services:
+
+  segfautils:
+      container_name: segfautils
+      image: projectsegfault/segfautils:latest
+      restart: always
+      ports:
+          - "6893:6893"
+      volumes:
+          - "./data:/segfautils/data"
