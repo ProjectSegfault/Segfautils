@@ -1,0 +1,8 @@
+[segfautils]
+port = 6893
+webhook_url = "YOURWEBHOOKURL"
+auth_token = "YOURAUTHTOKEN"
+
+[hcaptcha]
+site_key = "YOURSITEKEY"
+secret_key = "YOURSECRETKEY"

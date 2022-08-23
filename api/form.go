@@ -7,18 +7,18 @@ import (
 	"github.com/kataras/hcaptcha"
 
 	"fmt"
-	"os"
 
 	"io"
 	"net/url"
 
+	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/ProjectSegfault/segfautils/utils"
 )
 
 var (
-	siteKey    = os.Getenv("HCAPTCHA_SITE_KEY")
-	secretKey  = os.Getenv("HCAPTCHA_SECRET_KEY")
-	webhookURL = os.Getenv("SEGFAUTILS_WEBHOOK_URL")
+	siteKey    = config.HCaptchaSiteKey()
+	secretKey  = config.HCaptchaSecretKey()
+	webhookURL = config.WebhookURL()
 	client     = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
 )
 
