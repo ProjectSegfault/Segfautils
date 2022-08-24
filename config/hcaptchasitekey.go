@@ -2,7 +2,6 @@ package config
 
 import (
 	"log"
-	"strconv"
 
 	"github.com/spf13/viper"
 )
@@ -14,6 +13,6 @@ func HCaptchaSiteKey() string {
 	if err != nil {
 		log.Println("Error reading config for getting hcaptcha.site_key", err.Error())
 	}
-	result := strconv.Itoa(viper.GetInt("hcaptcha.site_key"))
+	result := viper.GetString("hcaptcha.site_key")
 	return result
 }
