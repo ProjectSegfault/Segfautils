@@ -32,8 +32,8 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "You need to provide the authorization token given to you by your system administrator in order to post an announcement.", http.StatusUnauthorized)
 		return
 	} else {
-		if r.FormValue("title") == "" || r.FormValue("link") == "" || r.FormValue("severity") == "" {
-			http.Error(w, "Your request is not proper. Please add a title, link, and severity.", http.StatusBadRequest)
+		if r.FormValue("title") == "" || r.FormValue("severity") == "" {
+			http.Error(w, "Your request is not proper. Please add a title and severity.", http.StatusBadRequest)
 			return
 		} else {
 			w.WriteHeader(http.StatusOK)
