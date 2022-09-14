@@ -6,3 +6,9 @@ auth_token = "YOURAUTHTOKEN"
 [hcaptcha]
 site_key = "YOURSITEKEY"
 secret_key = "YOURSECRETKEY"
+
+[oauth]
+client_id = "YOURCLIENTID"
+client_secret = "YOURCLIENTSECRET"
+redirect_url = "YOURREDIRECTURL"
+auth_url = "YOURAUTHURL"
