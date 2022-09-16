@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func AuthURL() string {
+func OAuthURL() string {
 	viper.SetConfigName("config")
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
