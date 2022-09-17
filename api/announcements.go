@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -16,6 +17,23 @@ import (
 var (
 	authToken = config.AuthToken()
 )
+
+func CheckAnn() {
+	jsonFile, err := os.Open("./data/options.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var result map[string]interface{}
+	json.Unmarshal([]byte(byteValue), &result)
+	res := result["Announcements"]
+	if res == "true" {
+		Announcements()
+	} else {
+		log.Println("Announcements disabled")
+	}
+}
 
 func Announcements() {
 	http.HandleFunc("/api/announcements", getAnnouncements)

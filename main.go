@@ -46,8 +46,9 @@ func main() {
 	http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/announcements.html")
 	})
+	api.Settings()
 	api.Form()
-	api.Announcements()
+	api.CheckAnn()
 	log.Println("[HTTP] HTTP server is now running at " + config.Port() + "!")
 	log.Println(http.ListenAndServe(":"+config.Port(), nil))
 }
