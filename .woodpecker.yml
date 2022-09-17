@@ -10,7 +10,7 @@ pipeline:
       event: [push]
     name: dockerize and publish
     image: plugins/docker
-    registry: git.projectsegfau.lt/midou/segfautils 
+    registry: git.projectsegfau.lt/projectsegfault/segfautils 
     settings:
       username:
         from_secret: username
