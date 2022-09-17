@@ -11,6 +11,7 @@ pipeline:
     name: dockerize and publish
     image: plugins/docker
     registry: git.projectsegfau.lt
+    repo: git.projectsegfau.lt/projectsegfault/segfautils 
     settings:
       username:
         from_secret: username
