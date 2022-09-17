@@ -11,7 +11,7 @@ func OptForm() string {
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config for getting options.form", err.Error())
+		log.Println("Error reading config. Error getting: options.form", err.Error())
 	}
 	result := viper.GetString("options.form")
 	return result

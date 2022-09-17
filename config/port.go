@@ -12,7 +12,7 @@ func Port() string {
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config for getting segfautils.port", err.Error())
+		log.Println("Error reading config. Error getting: segfautils.port", err.Error())
 	}
 	result := strconv.Itoa(viper.GetInt("segfautils.port"))
 	return result

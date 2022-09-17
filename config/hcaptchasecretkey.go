@@ -11,7 +11,7 @@ func HCaptchaSecretKey() string {
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config for getting hcaptcha.secret_key", err.Error())
+		log.Println("Error reading config. Error getting: hcaptcha.secret_key", err.Error())
 	}
 	result := viper.GetString("hcaptcha.secret_key")
 	return result

@@ -11,7 +11,7 @@ func OptAnn() string {
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config for getting options.announce", err.Error())
+		log.Println("Error reading config. Error getting: options.announce", err.Error())
 	}
 	result := viper.GetString("options.announce")
 	return result

@@ -15,7 +15,7 @@ func AuthToken() string {
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config for getting segfautils.auth_token", err.Error())
+		log.Println("Error reading config. Error getting: segfautils.auth_token", err.Error())
 	}
 	result := viper.GetString("segfautils.auth_token")
 	return result
