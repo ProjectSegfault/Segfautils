@@ -9,7 +9,8 @@ pipeline:
     when:
       event: [push]
     name: dockerize and publish
-    image: plugins/docker 
+    image: plugins/docker
+    registry: git.projectsegfau.lt/midou/segfautils 
     settings:
       username:
         from_secret: username
