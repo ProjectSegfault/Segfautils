@@ -33,7 +33,7 @@ func CheckAnn() {
 	} else {
 		log.Println("Announcements disabled")
 		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
-			io.WriteString(w, "Disabled")
+			http.Error(w, "Announcements are disabled.", http.StatusNotFound)
 		})
 	}
 }
