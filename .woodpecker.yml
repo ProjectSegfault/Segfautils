@@ -23,6 +23,7 @@ pipeline:
   dockerize_dev:
     when:
       event: [push]
+    image: plugins/docker
     name: dockerize and publish dev
     registry: git.projectsegfau.lt
     repo: git.projectsegfau.lt/projectsegfault/segfautils
