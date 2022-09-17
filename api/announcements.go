@@ -21,12 +21,22 @@ var (
 func CheckAnn() {
 	if resAnn == "true" {
 		Announcements()
+		AnnPage()
 	} else {
 		log.Println("Announcements disabled")
-		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
+		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Announcements are disabled.", http.StatusNotFound)
 		})
+		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusNotFound)
+		})
 	}
+}
+
+func AnnPage() {
+	http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/announcements.html")
+	})
 }
 
 func Announcements() {

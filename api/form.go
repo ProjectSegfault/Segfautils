@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"text/template"
 
 	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/ProjectSegfault/segfautils/utils"
@@ -22,6 +23,7 @@ var (
 
 func FormCheck() {
 	if resForm == "true" {
+		FormPage()
 		Form()
 	} else {
 		log.Println("Forms disabled")
@@ -29,6 +31,22 @@ func FormCheck() {
 			io.WriteString(w, "Disabled")
 		})
 	}
+}
+
+func FormPage() {
+	type StaticThing struct {
+		HCaptchaSiteKey string
+	}
+
+	tmpl_form := template.Must(template.ParseFiles("static/form.html"))
+	http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
+
+		hcaptcha_site_key := config.HCaptchaSiteKey()
+		data := StaticThing{
+			HCaptchaSiteKey: hcaptcha_site_key,
+		}
+		tmpl_form.Execute(w, data)
+	})
 }
 
 func Form() {
