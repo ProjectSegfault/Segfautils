@@ -1,21 +1,15 @@
 package api
 
 import (
-	"io/ioutil"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
-	"os"
-
-	"github.com/goccy/go-json"
-	"github.com/kataras/hcaptcha"
-
-	"fmt"
-
-	"io"
 	"net/url"
 
 	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/ProjectSegfault/segfautils/utils"
+	"github.com/kataras/hcaptcha"
 )
 
 var (
@@ -23,19 +17,11 @@ var (
 	secretKey  = config.HCaptchaSecretKey()
 	webhookURL = config.WebhookURL()
 	client     = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
+	resForm    = config.OptForm()
 )
 
 func FormCheck() {
-	jsonFile, err := os.Open("./data/options.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer jsonFile.Close()
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var result map[string]interface{}
-	json.Unmarshal([]byte(byteValue), &result)
-	res := result["Form"]
-	if res == "true" {
+	if resForm == "true" {
 		Form()
 	} else {
 		log.Println("Forms disabled")
