@@ -47,7 +47,7 @@ func main() {
 		http.ServeFile(w, r, "static/announcements.html")
 	})
 	api.Settings()
-	api.Form()
+	api.FormCheck()
 	api.CheckAnn()
 	log.Println("[HTTP] HTTP server is now running at " + config.Port() + "!")
 	log.Println(http.ListenAndServe(":"+config.Port(), nil))

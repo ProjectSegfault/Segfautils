@@ -1,9 +1,12 @@
 package api
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
+	"github.com/goccy/go-json"
 	"github.com/kataras/hcaptcha"
 
 	"fmt"
@@ -21,6 +24,26 @@ var (
 	webhookURL = config.WebhookURL()
 	client     = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
 )
+
+func FormCheck() {
+	jsonFile, err := os.Open("./data/options.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer jsonFile.Close()
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var result map[string]interface{}
+	json.Unmarshal([]byte(byteValue), &result)
+	res := result["Form"]
+	if res == "true" {
+		Form()
+	} else {
+		log.Println("Forms disabled")
+		http.HandleFunc("/api/form", func(w http.ResponseWriter, r *http.Request) {
+			io.WriteString(w, "Disabled")
+		})
+	}
+}
 
 func Form() {
 	http.HandleFunc("/api/form", client.HandlerFunc(theActualFormCode))
