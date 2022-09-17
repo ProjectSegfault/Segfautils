@@ -35,7 +35,6 @@ func main() {
 		io.WriteString(w, "welcome to hell")
 	})
 
-	api.Form()
 	log.Println("[HTTP] HTTP server is now running at " + config.Port() + "!")
 	log.Println(http.ListenAndServe(":"+config.Port(), nil))
 }
