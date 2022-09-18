@@ -1,18 +1,16 @@
 package api
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"net/http"
-
-	"github.com/kataras/hcaptcha"
-
-	"fmt"
-
-	"io"
 	"net/url"
+	"text/template"
 
 	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/ProjectSegfault/segfautils/utils"
+	"github.com/kataras/hcaptcha"
 )
 
 var (
@@ -20,7 +18,36 @@ var (
 	secretKey  = config.HCaptchaSecretKey()
 	webhookURL = config.WebhookURL()
 	client     = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
+	resForm    = config.OptForm()
 )
+
+func FormCheck() {
+	if resForm == "false" {
+		log.Println("[Segfautils] ℹ Contact form is disabled")
+		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "Form is disabled.", http.StatusServiceUnavailable)
+		})
+	} else {
+		FormPage()
+		Form()
+	}
+}
+
+func FormPage() {
+	type StaticThing struct {
+		HCaptchaSiteKey string
+	}
+
+	tmpl_form := template.Must(template.ParseFiles("static/form.html"))
+	http.HandleFunc("/form/", func(w http.ResponseWriter, r *http.Request) {
+
+		hcaptcha_site_key := config.HCaptchaSiteKey()
+		data := StaticThing{
+			HCaptchaSiteKey: hcaptcha_site_key,
+		}
+		tmpl_form.Execute(w, data)
+	})
+}
 
 func Form() {
 	http.HandleFunc("/api/form", client.HandlerFunc(theActualFormCode))

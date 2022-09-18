@@ -7,9 +7,12 @@ pipeline:
       - go build -o segfautils
   dockerize_n_publish:
     when:
+      branch : [master]
       event: [push]
     name: dockerize and publish
-    image: plugins/docker 
+    image: plugins/docker
+    registry: git.projectsegfau.lt
+    repo: git.projectsegfau.lt/projectsegfault/segfautils 
     settings:
       username:
         from_secret: username
@@ -17,6 +20,20 @@ pipeline:
         from_secret: password
       repo: projectsegfault/segfautils 
       dockerfile: Dockerfile
-
+  dockerize_dev:
+    when:
+      event: [push]
+    image: plugins/docker
+    name: dockerize and publish dev
+    registry: git.projectsegfau.lt
+    repo: git.projectsegfau.lt/projectsegfault/segfautils
+    settings:
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+      repo: projectsegfau.lt/segfautils
+      tags: dev
+      dockerfile: Dockerfile
     
   

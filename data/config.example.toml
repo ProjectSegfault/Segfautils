@@ -6,3 +6,7 @@ auth_token = "YOURAUTHTOKEN"
 [hcaptcha]
 site_key = "YOURSITEKEY"
 secret_key = "YOURSECRETKEY"
+
+[options]
+announce = true
+form     = false

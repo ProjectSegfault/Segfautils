@@ -15,7 +15,29 @@ import (
 
 var (
 	authToken = config.AuthToken()
+	resAnn    = config.OptAnn()
 )
+
+func AnnCheck() {
+	if resAnn == "false" {
+		log.Println("[Segfautils] ℹ Announcements are disabled")
+		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
+		})
+		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
+		})
+	} else {
+		AnnPage()
+		Announcements()
+	}
+}
+
+func AnnPage() {
+	http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/announcements.html")
+	})
+}
 
 func Announcements() {
 	http.HandleFunc("/api/announcements", getAnnouncements)
@@ -39,6 +61,7 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 			now := time.Now().Unix()
 			data := map[string]interface{}{
+				"enabled":  "true",
 				"title":    r.FormValue("title"),
 				"link":     r.FormValue("link"),
 				"severity": r.FormValue("severity"),
