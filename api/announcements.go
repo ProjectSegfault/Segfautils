@@ -20,8 +20,8 @@ var (
 
 func CheckAnn() {
 	if resAnn == "true" {
-		Announcements()
 		AnnPage()
+		Announcements()
 	} else {
 		log.Println("Announcements disabled")
 		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {

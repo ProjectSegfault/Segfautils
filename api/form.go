@@ -30,6 +30,9 @@ func FormCheck() {
 		http.HandleFunc("/api/form", func(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, "Disabled")
 		})
+		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
+			io.WriteString(w, "Disabled")
+		})
 	}
 }
 
