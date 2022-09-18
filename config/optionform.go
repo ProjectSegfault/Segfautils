@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-func OptAnn() string {
+func OptForm() string {
 	viper.SetConfigName("config")
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config. Error getting: options.announce", err.Error())
+		log.Println("Error reading config. Error getting: options.form", err.Error())
 	}
-	result := viper.GetString("options.announce")
+	result := viper.GetString("options.form")
 	return result
 }

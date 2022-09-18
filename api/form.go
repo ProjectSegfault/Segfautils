@@ -22,14 +22,14 @@ var (
 )
 
 func FormCheck() {
-	if resForm == "true" {
-		FormPage()
-		Form()
-	} else {
+	if resForm == "false" {
 		log.Println("[Segfautils] ℹ Contact form is disabled")
 		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Form is disabled.", http.StatusServiceUnavailable)
 		})
+	} else {
+		FormPage()
+		Form()
 	}
 }
 

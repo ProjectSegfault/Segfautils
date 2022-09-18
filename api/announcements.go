@@ -19,10 +19,7 @@ var (
 )
 
 func AnnCheck() {
-	if resAnn == "true" {
-		AnnPage()
-		Announcements()
-	} else {
+	if resAnn == "false" {
 		log.Println("[Segfautils] ℹ Announcements are disabled")
 		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
@@ -30,6 +27,9 @@ func AnnCheck() {
 		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
 		})
+	} else {
+		AnnPage()
+		Announcements()
 	}
 }
 
