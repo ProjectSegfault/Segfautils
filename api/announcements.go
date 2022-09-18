@@ -25,10 +25,10 @@ func CheckAnn() {
 	} else {
 		log.Println("Announcements disabled")
 		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
-			http.Error(w, "Announcements are disabled.", http.StatusNotFound)
+			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
 		})
 		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
-			http.Error(w, "{\"enabled\": \"false\"}", http.StatusNotFound)
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
 		})
 	}
 }

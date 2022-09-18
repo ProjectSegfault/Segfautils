@@ -27,11 +27,11 @@ func FormCheck() {
 		Form()
 	} else {
 		log.Println("Forms disabled")
-		http.HandleFunc("/api/form", func(w http.ResponseWriter, r *http.Request) {
-			io.WriteString(w, "Disabled")
-		})
 		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
-			io.WriteString(w, "Disabled")
+			http.Error(w, "Form is disabled.", http.StatusServiceUnavailable)
+		})
+		http.HandleFunc("/api/form", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
 		})
 	}
 }
