@@ -28,7 +28,7 @@ func main() {
 	})
 
 	log.Println("[HTTP] Starting server")
-	api.CheckAnn()
+	api.AnnCheck()
 	api.FormCheck()
 
 	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {

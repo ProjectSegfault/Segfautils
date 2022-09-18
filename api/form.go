@@ -26,12 +26,9 @@ func FormCheck() {
 		FormPage()
 		Form()
 	} else {
-		log.Println("Forms disabled")
+		log.Println("[Segfautils] ℹ Contact form is disabled")
 		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Form is disabled.", http.StatusServiceUnavailable)
-		})
-		http.HandleFunc("/api/form", func(w http.ResponseWriter, r *http.Request) {
-			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
 		})
 	}
 }

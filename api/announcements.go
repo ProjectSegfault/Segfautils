@@ -18,12 +18,12 @@ var (
 	resAnn    = config.OptAnn()
 )
 
-func CheckAnn() {
+func AnnCheck() {
 	if resAnn == "true" {
 		AnnPage()
 		Announcements()
 	} else {
-		log.Println("Announcements disabled")
+		log.Println("[Segfautils] ℹ Announcements are disabled")
 		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
 		})
@@ -61,6 +61,7 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 			now := time.Now().Unix()
 			data := map[string]interface{}{
+				"enabled":  "true",
 				"title":    r.FormValue("title"),
 				"link":     r.FormValue("link"),
 				"severity": r.FormValue("severity"),
