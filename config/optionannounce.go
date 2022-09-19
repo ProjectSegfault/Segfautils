@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-func HCaptchaSiteKey() string {
+func OptAnn() string {
 	viper.SetConfigName("config")
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config. Error getting: hcaptcha.site_key", err.Error())
+		log.Println("Error reading config. Error getting: options.announce", err.Error())
 	}
-	result := viper.GetString("hcaptcha.site_key")
+	result := viper.GetString("options.announce")
 	return result
 }

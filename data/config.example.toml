@@ -12,3 +12,7 @@ client_id = "YOURCLIENTID"
 client_secret = "YOURCLIENTSECRET"
 redirect_url = "YOURREDIRECTURL"
 auth_url = "YOURAUTHURL"
+
+[options]
+announce = true
+form     = false
