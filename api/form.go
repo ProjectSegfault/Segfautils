@@ -27,8 +27,15 @@ func FormCheck() {
 		http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Form is disabled.", http.StatusServiceUnavailable)
 		})
+		http.HandleFunc("/api/set/form", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
+		})
+
 	} else {
 		FormPage()
+		http.HandleFunc("/api/set/form", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"true\"}", http.StatusServiceUnavailable)
+		})
 		Form()
 	}
 }

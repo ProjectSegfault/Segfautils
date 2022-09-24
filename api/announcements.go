@@ -24,11 +24,14 @@ func AnnCheck() {
 		http.HandleFunc("/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
 		})
-		http.HandleFunc("/api/announcements", func(w http.ResponseWriter, r *http.Request) {
+		http.HandleFunc("/api/set/announcements", func(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
 		})
 	} else {
 		AnnPage()
+		http.HandleFunc("/api/set/announcements", func(w http.ResponseWriter, r *http.Request) {
+			http.Error(w, "{\"enabled\": \"true\"}", http.StatusServiceUnavailable)
+		})
 		Announcements()
 	}
 }
@@ -61,7 +64,6 @@ func handleAnnouncements(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 			now := time.Now().Unix()
 			data := map[string]interface{}{
-				"enabled":  "true",
 				"title":    r.FormValue("title"),
 				"link":     r.FormValue("link"),
 				"severity": r.FormValue("severity"),
