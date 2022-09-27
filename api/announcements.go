@@ -25,7 +25,7 @@ func AnnCheck() {
 			http.Error(w, "Announcements are disabled.", http.StatusServiceUnavailable)
 		})
 		http.HandleFunc("/api/set/announcements", func(w http.ResponseWriter, r *http.Request) {
-			http.Error(w, "{\"enabled\": \"false\"}", http.StatusServiceUnavailable)
+			http.Error(w, "{\"enabled\": \"false\"}", http.StatusOK)
 		})
 	} else {
 		AnnPage()
