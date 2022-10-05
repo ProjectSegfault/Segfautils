@@ -1,0 +1,8 @@
+[segfautils]
+port = 6893
+webhook_url = "https://127.0.0.1:8080/segfautils"
+auth_token = "121212"
+
+[hcaptcha]
+site_key = "lol"
+secret_key = "lol2"

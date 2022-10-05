@@ -7,6 +7,12 @@ auth_token = "YOURAUTHTOKEN"
 site_key = "YOURSITEKEY"
 secret_key = "YOURSECRETKEY"
 
+[oauth]
+client_id = "YOURCLIENTID"
+client_secret = "YOURCLIENTSECRET"
+redirect_url = "YOURREDIRECTURL"
+auth_url = "YOURAUTHURL"
+
 [options]
 announce = true
 form     = false

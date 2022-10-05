@@ -2,7 +2,7 @@
 Web utilities for Project Segfault
 
 ## What does it do?
-For now it powers our contact form. In the future we will expand our APIs so you can do more cool things.
+For now it powers our contact form and our announcements page. In the future we will expand our APIs so you can do more cool things. (We currently do not have any new idea so please open issues and give us suggestions!!)
 
 ## Setup
 
@@ -20,7 +20,7 @@ If you're using Portainer, you should know how to add Segfautils.
 ```
 git clone https://github.com/ProjectSegfault/segfautils
 cd segfautils/
-# You need to add the environment HCAPTCHA_SITE_KEY, HCAPTCHA_SECRET_KEY, SEGFAUTILS_WEBHOOK_URL and SEGFAUTILS_PORT.
+# You need to config file located in data/config.toml. 
 go run main.go # Run this when you've done above, and you're planning on developing, if not, do below
 go build . -o segfautils
 ./segfautils
