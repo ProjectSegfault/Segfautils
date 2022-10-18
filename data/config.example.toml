@@ -1,6 +1,7 @@
 [segfautils]
 port = 6893
 auth_token = "YOURAUTHTOKEN"
+shoutrrr_url = "YOURSHOUTRRURL"
 
 [hcaptcha]
 site_key = "YOURSITEKEY"
