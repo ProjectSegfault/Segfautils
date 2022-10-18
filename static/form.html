@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,18 +23,11 @@
     </style>
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
+
 <body>
-    <form
-        action="/api/form"
-        method="POST"
-    >
+    <form action="/api/form" method="POST">
         <div class="meta">
-            <input
-                type="text"
-                name="email"
-                placeholder="Your email"
-                required
-            />
+            <input type="text" name="email" placeholder="Your email" required />
             <select id="commentType" name="commentType" required>
                 <option value="" selected disabled>Select a type of comment</option>
                 <option value="Feedback">Feedback</option>
@@ -42,16 +36,10 @@
                 <option value="Bug">Bug</option>
             </select>
         </div>
-        <textarea
-            id="comment"
-            name="message"
-            rows="4"
-            cols="25"
-            required
-            placeholder="Your message"
-        ></textarea>
+        <textarea id="comment" name="message" rows="4" cols="25" required placeholder="Your message"></textarea>
         <div class="h-captcha" data-sitekey="{{.HCaptchaSiteKey}}"></div>
         <input type="submit" value="Submit" />
     </form>
 </body>
+
 </html>
