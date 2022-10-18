@@ -18,10 +18,10 @@ func CheckConfig() {
 	} else {
 		log.Println("[Segfautils] ✅ segfautils.auth_token is set!")
 	}
-	if config.WebhookURL() == "YOURWEBHOOKURL" || config.WebhookURL() == "" {
+	if config.ShoutrrrURL() == "" {
 		log.Fatal("[Segfautils] ❌ You need to set the Webhook URL you'd like to use in the config file. Check documentation for more information.")
 	} else {
-		log.Println("[Segfautils] ✅ segfautils.webhook_url is set!")
+		log.Println("[Segfautils] ✅ segfautils.shoutrrr_url is set!")
 	}
 	// Hcaptcha stuff
 	if config.HCaptchaSecretKey() == "YOURSECRETKEY" || config.HCaptchaSecretKey() == "" {

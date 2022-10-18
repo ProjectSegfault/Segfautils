@@ -11,12 +11,14 @@ import (
 	"github.com/ProjectSegfault/segfautils/config"
 	"github.com/ProjectSegfault/segfautils/utils"
 	"github.com/kataras/hcaptcha"
+
+	"github.com/containrrr/shoutrrr"
 )
 
 var (
 	siteKey    = config.HCaptchaSiteKey()
 	secretKey  = config.HCaptchaSecretKey()
-	webhookURL = config.WebhookURL()
+	webhookURL = config.ShoutrrrURL()
 	client     = hcaptcha.New(secretKey) /* See `Client.FailureHandler` too. */
 	resForm    = config.OptForm()
 )
@@ -81,23 +83,15 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 			postData := url.Values{
 				"content": {"IP " + utils.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + utils.GetUserIP(r)},
 			}
-			if r.FormValue("webhook") != "" {
-				fmt.Fprintf(w, "\nThanks for trying Segfautils Contact Form :)")
-				postData := url.Values{
-					"content": {"**Note: you are currently testing our form example. Please check out the actual project at https://github.com/ProjectSegfault/segfautils if you found this neat! It's not hard to self-host :)**\n" + "IP " + utils.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + utils.GetUserIP(r)},
-				}
-				req, err := http.PostForm(r.FormValue("webhook"), postData)
-				if err != nil {
-					log.Println("Someone tried to send a webhook, but it failed!")
-				}
-				fmt.Fprint(io.Discard, req) // I don't want the result of the demo request in stdout at ALL.
-			} else {
-				req, err := http.PostForm(webhookURL, postData)
-				if err != nil {
-					log.Fatal("Something went terribly wrong!", err)
-				}
-				fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
+			shoutrrr := shoutrrr.Send(config.ShoutrrrURL(), "IP "+utils.GetUserIP(r)+"\nFrom "+r.FormValue("email")+" with feedback type "+r.FormValue("commentType")+":\n"+"**"+r.FormValue("message")+"**\n https://abuseipdb.com/check/"+utils.GetUserIP(r))
+			if shoutrrr != nil {
+				log.Fatal("Something went terribly wrong!", shoutrrr)
 			}
+			req, err := http.PostForm(webhookURL, postData)
+			if err != nil {
+				log.Fatal("Something went terribly wrong!", err)
+			}
+			fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
 		}
 	default:
 		http.Error(w, "Method isn't allowed!\nYou may only POST here, not "+r.Method, http.StatusMethodNotAllowed)
