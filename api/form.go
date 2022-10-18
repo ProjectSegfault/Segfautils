@@ -2,8 +2,10 @@ package api
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"text/template"
 
 	"github.com/ProjectSegfault/segfautils/config"
@@ -73,10 +75,18 @@ func theActualFormCode(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			fmt.Fprintf(w, "Thanks for your message, and thanks for doing the captcha!\nPlease ignore how different this page looks to the page you were on earlier. I'll figure it out eventually!\n%#+v", hcaptchaResp)
+			postData := url.Values{
+				"content": {"IP " + utils.GetUserIP(r) + "\nFrom " + r.FormValue("email") + " with feedback type " + r.FormValue("commentType") + ":\n" + "**" + r.FormValue("message") + "**\n https://abuseipdb.com/check/" + utils.GetUserIP(r)},
+			}
 			shoutrrr := shoutrrr.Send(config.ShoutrrrURL(), "IP "+utils.GetUserIP(r)+"\nFrom "+r.FormValue("email")+" with feedback type "+r.FormValue("commentType")+":\n"+"**"+r.FormValue("message")+"**\n https://abuseipdb.com/check/"+utils.GetUserIP(r))
 			if shoutrrr != nil {
-				log.Println("[Segfautils] ✖ Failed to send webhook")
+				log.Fatal("Something went terribly wrong!", shoutrrr)
 			}
+			req, err := http.PostForm(webhookURL, postData)
+			if err != nil {
+				log.Fatal("Something went terribly wrong!", err)
+			}
+			fmt.Fprint(io.Discard, req) // Out with your request! I don't want it.
 		}
 	default:
 		http.Error(w, "Method isn't allowed!\nYou may only POST here, not "+r.Method, http.StatusMethodNotAllowed)
