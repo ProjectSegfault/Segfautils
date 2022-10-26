@@ -1,5 +1,5 @@
 # Segfautils
-Web utilities for Project Segfault
+Web utilities for Project Segfault, written in Next.js.
 
 ## What does it do?
 For now it powers our contact form. In the future we will expand our APIs so you can do more cool things.
