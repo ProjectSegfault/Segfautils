@@ -6,13 +6,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-func WebhookURL() string {
+func ShoutrrrURL() string {
 	viper.SetConfigName("config")
 	viper.AddConfigPath("./data")
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("Error reading config. Error getting: segfautils.webhook_url", err.Error())
+		log.Println("Error reading config. Error getting: segfautils.shoutrrr_url", err.Error())
 	}
-	result := viper.GetString("segfautils.webhook_url")
+	result := viper.GetString("segfautils.shoutrrr_url")
 	return result
 }

@@ -1,7 +1,8 @@
 [segfautils]
 port = 6893
-webhook_url = "YOURWEBHOOKURL"
 auth_token = "YOURAUTHTOKEN"
+shoutrrr_url = "YOURSHOUTRRURL" # Shoutrrr URL examples are available at https://containrrr.dev/shoutrrr/v0.5/services/overview
+# shoutrrr_url = "discord://token@id"
 
 [hcaptcha]
 site_key = "YOURSITEKEY"
